@@ -1,6 +1,7 @@
 #include "Logger.h"
 
-LogLevel Logger::currentLevel = LOG_DEBUG;
+Logger::Logger() : currentLevel(LOG_DEBUG) {
+}
 
 void Logger::begin(LogLevel level) {
     currentLevel = level;

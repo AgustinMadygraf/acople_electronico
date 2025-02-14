@@ -5,7 +5,7 @@
 
 /**
  * @enum LogLevel
- * @brief Represents the logging verbosity level.
+ * @brief Representa los niveles de logging.
  */
 enum LogLevel {
     LOG_DEBUG,
@@ -14,38 +14,16 @@ enum LogLevel {
     LOG_ERROR
 };
 
-/**
- * @class Logger
- * @brief Provides static methods to perform logging.
- * 
- * This class handles initialization and logging messages with different levels.
- */
-class Logger {
+#include "ILogger.h"
+
+class Logger : public ILogger {
 public:
-    /**
-     * @brief Initializes the Logger.
-     * 
-     * @param level Minimum log level to display.
-     */
-    static void begin(LogLevel level = LOG_DEBUG);
-    
-    /**
-     * @brief Logs a message if the log level is sufficient.
-     * 
-     * @param level Level of the message.
-     * @param message The message to log.
-     */
-    static void log(LogLevel level, const char* message);
-    
-    /**
-     * @brief Sets the minimum log level.
-     * 
-     * @param level New log level
-     */
-    static void setLevel(LogLevel level);
-    
+    Logger();
+    void begin(LogLevel level = LOG_DEBUG) override;
+    void log(LogLevel level, const char* message) override;
+    void setLevel(LogLevel level) override;
 private:
-    static LogLevel currentLevel;
+    LogLevel currentLevel;
 };
 
 #endif // LOGGER_H
