@@ -5,9 +5,12 @@
 
 class HardwareManager {
 public:
-    HardwareManager();    
+    HardwareManager(int pwmPin);    
     void beginPWM();     // Configures PWM hardware.
     void writePWM(int value); // Writes PWM output.
+
+private:
+    int pin;
 };
 
 #endif // HARDWAREMANAGER_H

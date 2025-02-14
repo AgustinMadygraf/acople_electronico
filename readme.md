@@ -62,3 +62,30 @@ RPM Maestro: 1250.00 | RPM Esclavo: 1230.00 | PWM Esclavo: 190
 📌 **Autor:** Agustín  
 📆 **Última actualización:** Febrero 2025  
 📄 **Licencia:** MIT
+
+## 4. Selección entre ESP-WROOM-32 y Arduino Uno
+
+- **Implementación Actual:**  
+  • El sistema determina la plataforma a través de la función fábrica definida en [`HAL.h`](main/HAL.h), y sus implementaciones están divididas en [`HAL_Arduino.cpp`](main/HAL_Arduino.cpp) y [`HAL_ESP32.cpp`](main/HAL_ESP32.cpp).
+
+- **Momento de Selección:**  
+  • Se recomienda la selección en **tiempo de compilación** utilizando macros (por ejemplo: `ESP32_PLATFORM`). Esto garantiza que el código generado sea específico para la plataforma destino, eliminando verificaciones en tiempo de ejecución que puedan añadir overhead.
+  
+- **Ventajas de la Compilación Condicional:**  
+  • Minimiza el consumo de recursos en sistemas embebidos.  
+  • Facilita la integración y el mantenimiento, ya que se elimina la complejidad del manejo dinámico de plataformas.  
+
+- **Sugerencia Adicional:**  
+  • Incluir en la documentación ejemplos de cómo configurar y definir la macro (`ESP32_PLATFORM`) en el entorno de desarrollo para compilar correctamente para cada plataforma.
+
+## 📌 Configuración del Preprocesador
+
+Para compilar para ESP32 defina la macro <code>ESP32_PLATFORM</code>. Por ejemplo, en el entorno de desarrollo (como el Arduino IDE) agregue la bandera:
+```bash
+-DESP32_PLATFORM
+```
+Para Arduino Uno, asegúrese de no definir esta macro.
+
+## ⚙️ Diseño y Modularidad
+
+El proyecto utiliza el patrón Factory en la abstracción de hardware (ver HAL.h, HAL_ESP32.cpp y HAL_Arduino.cpp) y la inyección de dependencias en MainController para facilitar la escalabilidad y el mantenimiento. Además, la gestión de interrupciones (InterruptManager.cpp) y el sistema de logs (Logger.cpp y MQTTLogger.cpp) se implementan de forma modular para optimizar el rendimiento y la flexibilidad.

@@ -1,4 +1,5 @@
 #include "Logger.h"
+#include "LogFormatter.h"
 
 /**
  * @brief Helper function to convert LogLevel enum to its string representation.
@@ -47,16 +48,9 @@ void Logger::begin(LogLevel level) {
  */
 void Logger::log(LogLevel level, const char* message) {
     if (level < currentLevel) return;
-    const char* levelStr = getLogLevelName(level);
-    unsigned long ts = millis();
-    // Build the log message with timestamp and append to buffer.
-    logBuffer += "[";
-    logBuffer += String(ts);
-    logBuffer += "] [";
-    logBuffer += levelStr;
-    logBuffer += "] ";
-    logBuffer += message;
-    logBuffer += "\n";
+    // Use the shared formatter:
+    String entry = LogFormatter::format(level, message);
+    logBuffer += entry;
 }
 
 /**

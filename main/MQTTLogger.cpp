@@ -1,5 +1,6 @@
 #include "MQTTLogger.h"
 #include <Arduino.h>
+#include "LogFormatter.h"
 
 MQTTLogger::MQTTLogger(const char* broker, int port)
     : broker(broker), port(port), currentLevel(LOG_DEBUG), logBuffer("") {
@@ -18,13 +19,8 @@ void MQTTLogger::begin(LogLevel level) {
 
 void MQTTLogger::log(LogLevel level, const char* message) {
     if (level < currentLevel) return;
-    unsigned long ts = millis();
-    // Append log message with timestamp to the buffer.
-    logBuffer += "[";
-    logBuffer += String(ts);
-    logBuffer += "] ";
-    logBuffer += message;
-    logBuffer += "\n";
+    String entry = LogFormatter::format(level, message);
+    logBuffer += entry;
     // Simulated asynchronous MQTT publication:
     Serial.print("[MQTT] ");
     Serial.println(message);

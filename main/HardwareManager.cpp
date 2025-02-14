@@ -1,14 +1,13 @@
 #include "HardwareManager.h"
 
-HardwareManager::HardwareManager() {
-    // ...existing code...
+HardwareManager::HardwareManager(int pwmPin) : pin(pwmPin) {
+    // ...constructor logic...
 }
 
 void HardwareManager::beginPWM() {
-    const int pwmPin = 25; // PWM output pin.
-    pinMode(pwmPin, OUTPUT);
+    pinMode(pin, OUTPUT);
     ledcSetup(0, 1000, 8);
-    ledcAttachPin(pwmPin, 0);
+    ledcAttachPin(pin, 0);
 }
 
 void HardwareManager::writePWM(int value) {

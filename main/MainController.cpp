@@ -22,10 +22,16 @@ void MainController::begin() {
     sensorEsclavo->begin();
     // Configura ambos sensores para empezar a contar pulsos.
     
+    configureHardware(); // call new method
     // Delegate PWM configuration to HardwareManager.
-    hardwareManager->beginPWM();
-    // Asocia el canal PWM al pin configurado.
 
+}
+
+/**
+ * @brief Configures the hardware components.
+ */
+void MainController::configureHardware() {
+    hardwareManager->beginPWM();
 }
 
 /**

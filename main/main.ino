@@ -14,7 +14,7 @@ Sensor sensorMaestro(34, 10, 100.0);
 Sensor sensorEsclavo(35, 10, 100.0);
 PIDController pid(2.0, 0.5, 0.1, 100.0);
 Logger logger;
-HardwareManager hardwareManager; // new instance for hardware control
+HardwareManager hardwareManager(12); // new instance for hardware control
 
 // Updated MainController instantiation with HardwareManager dependency.
 MainController mainController(&sensorMaestro, &sensorEsclavo, &pid, &logger, &hardwareManager);

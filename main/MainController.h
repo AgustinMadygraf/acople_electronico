@@ -53,6 +53,7 @@ private:
     HardwareManager* hardwareManager; // new dependency for PWM control
     unsigned long previousTime;
     // Removed PWM_ESCLAVO_PIN; PWM control is delegated.
+    void configureHardware(); // new private method
 };
 
 #endif // MAINCONTROLLER_H
