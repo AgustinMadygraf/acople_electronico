@@ -49,17 +49,6 @@ public:
      */
     float getRPM();
 
-    /**
-     * @brief Manejador de interrupciones estático.
-     *
-     * Este método se pasa como parámetro a attachInterruptArg y:
-     * - Recibe un puntero al objeto Sensor.
-     * - Llama a countPulse() para actualizar el contador de pulsos.
-     *
-     * @param arg Puntero a la instancia Sensor.
-     */
-    static void IRAM_ATTR isrHandler(void *arg);
-
 private:
     int pin;
     int pulsesPerRevolution;

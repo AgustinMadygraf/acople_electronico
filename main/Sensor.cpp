@@ -1,4 +1,5 @@
 #include "Sensor.h"
+#include "InterruptManager.h" // New include
 
 Sensor::Sensor(int pin, int pulsesPerRevolution, float sampleTime)
     : pin(pin), pulsesPerRevolution(pulsesPerRevolution), sampleTime(sampleTime), pulseCount(0) {
@@ -7,8 +8,8 @@ Sensor::Sensor(int pin, int pulsesPerRevolution, float sampleTime)
 
 void Sensor::begin() {
     pinMode(pin, INPUT_PULLUP);
-    // Configura el pin e integra la interrupción pasando la instancia actual.
-    attachInterruptArg(digitalPinToInterrupt(pin), Sensor::isrHandler, this, RISING);
+    // Use InterruptManager's ISR instead of Sensor's own.
+    attachInterruptArg(digitalPinToInterrupt(pin), InterruptManager::handleInterrupt, this, RISING);
 }
 
 void Sensor::countPulse() {
@@ -26,9 +27,4 @@ float Sensor::getRPM() {
     return (pulses * (60000.0 / sampleTime)) / pulsesPerRevolution;
 }
 
-// ISR estática para manejar las interrupciones y delegar a countPulse().
-void IRAM_ATTR Sensor::isrHandler(void *arg) {
-    Sensor* sensor = static_cast<Sensor*>(arg);
-    sensor->countPulse();
-    // Nota: se evita realizar operaciones largas en la ISR.
-}
+// Removed Sensor::isrHandler
