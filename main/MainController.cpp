@@ -4,8 +4,9 @@
 /**
  * @brief Constructs the MainController with provided dependencies.
  */
-MainController::MainController(Sensor* sensorMaestro, Sensor* sensorEsclavo, PIDController* pid, ILogger* logger)
-    : sensorMaestro(sensorMaestro), sensorEsclavo(sensorEsclavo), pid(pid), logger(logger), previousTime(0) {
+MainController::MainController(Sensor* sensorMaestro, Sensor* sensorEsclavo, PIDController* pid, ILogger* logger, HardwareManager* hardwareManager)
+    : sensorMaestro(sensorMaestro), sensorEsclavo(sensorEsclavo), pid(pid), logger(logger),
+      hardwareManager(hardwareManager), previousTime(0) {
     // Constructor: inicializa las dependencias necesarias para el control del sistema.
 
 }
@@ -20,11 +21,8 @@ void MainController::begin() {
     sensorEsclavo->begin();
     // Configura ambos sensores para empezar a contar pulsos.
     
-    pinMode(PWM_ESCLAVO_PIN, OUTPUT);
-    // Configura el pin para salida PWM.
-    ledcSetup(0, 1000, 8);
-    // Configura el canal 0 para un PWM de 1 kHz y resolución de 8 bits.
-    ledcAttachPin(PWM_ESCLAVO_PIN, 0);
+    // Delegate PWM configuration to HardwareManager.
+    hardwareManager->beginPWM();
     // Asocia el canal PWM al pin configurado.
 
 }
@@ -43,7 +41,8 @@ void MainController::update() {
         
         int pwmOutput = pid->compute(rpmMaestro, rpmEsclavo);
         // Calcula la señal de control a partir del error entre ambos sensores.
-        ledcWrite(0, pwmOutput);
+        // Delegate PWM write to HardwareManager.
+        hardwareManager->writePWM(pwmOutput);
         // Actualiza la salida PWM según el cálculo del PID.
 
         char logMsg[128];

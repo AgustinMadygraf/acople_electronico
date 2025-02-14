@@ -5,6 +5,7 @@
 #include "Sensor.h"
 #include "PIDController.h"
 #include "ILogger.h"
+#include "HardwareManager.h" // added dependency for hardware control
 
 /**
  * @class MainController
@@ -23,10 +24,11 @@ public:
      * @param sensorEsclavo Puntero al sensor esclavo.
      * @param pid Puntero al controlador PID.
      * @param logger Puntero al logger para el registro de eventos.
+     * @param hardwareManager Puntero al gestor de hardware para el control PWM.
      *
      * Se guardan las referencias para uso en la inicialización y actualización.
      */
-    MainController(Sensor* sensorMaestro, Sensor* sensorEsclavo, PIDController* pid, ILogger* logger);
+    MainController(Sensor* sensorMaestro, Sensor* sensorEsclavo, PIDController* pid, ILogger* logger, HardwareManager* hardwareManager);
     
     /**
      * @brief Inicializa todos los subsistemas.
@@ -48,9 +50,9 @@ private:
     Sensor* sensorEsclavo;
     PIDController* pid;
     ILogger* logger;
+    HardwareManager* hardwareManager; // new dependency for PWM control
     unsigned long previousTime;
-    static const int PWM_ESCLAVO_PIN = 25; // Pin dedicado a la salida PWM del sensor esclavo.
-    // Constants used for PWM setup and other hardware parameters.
+    // Removed PWM_ESCLAVO_PIN; PWM control is delegated.
 };
 
 #endif // MAINCONTROLLER_H
