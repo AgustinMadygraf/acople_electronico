@@ -1,17 +1,26 @@
+// Adaptación: Las funciones implementadas cumplen con la interfaz IEncoder.
 #include "EncoderManager.h"
 #include <Arduino.h>
 
 static volatile long _contadorPrincipal = 0;
 static volatile long _contadorSecundario = 0;
 
+// Constructor corregido con inicialización adecuada de cada miembro.
 EncoderManager::EncoderManager(int pinPrin, int pinSec, int ppr, float circ)
-    : pinPrincipal(pinPrin), pinSecundario(pinSec), 
-      pulsosPorRevolucion(ppr), circunferencia(circ),
-      contadorPrincipal(&_contadorPrincipal), 
-      contadorSecundario(&_contadorSecundario),
-      ultimoContadorSecundario(0) {}
+    : pulsosPorRevolucion(ppr)
+    , circunferencia(circ)
+    , pinPrincipal(pinPrin)
+    , pinSecundario(pinSec)
+    , contadorPrincipal(&_contadorPrincipal)
+    , contadorSecundario(&_contadorSecundario)
+    , ultimoContadorSecundario(0)
+{
+}
 
-EncoderManager::~EncoderManager() {}
+// Agregada implementación del destructor vacío.
+EncoderManager::~EncoderManager() {
+    // ...cleanup if necessary...
+}
 
 void EncoderManager::begin() {
     pinMode(pinPrincipal, INPUT_PULLUP);

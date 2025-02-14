@@ -1,6 +1,8 @@
 #include "PIDController.h"
 #include <Arduino.h>
 
+// Adaptación: Los métodos de PIDController cumplen con la interfaz IPIDController.
+
 PIDController::PIDController(float kp, float ki, float kd) 
     : kp(kp), ki(ki), kd(kd), setpoint(0), lastError(0), integral(0),
       outputMin(0), outputMax(255), lastTime(0) {}
