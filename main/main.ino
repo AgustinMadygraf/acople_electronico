@@ -9,6 +9,7 @@
 #include "PIDController.h"
 #include "Logger.h"
 #include "HardwareManager.h"  // add HardwareManager include
+#include "InterruptManager.h"  // add InterruptManager include
 
 Sensor sensorMaestro(34, 10, 100.0);
 Sensor sensorEsclavo(35, 10, 100.0);
@@ -21,6 +22,8 @@ MainController mainController(&sensorMaestro, &sensorEsclavo, &pid, &logger, &ha
 
 void setup() {
     mainController.begin();
+    InterruptManager::attachSensorInterrupt(34, &sensorMaestro);
+    InterruptManager::attachSensorInterrupt(35, &sensorEsclavo);
 }
 
 void loop() {

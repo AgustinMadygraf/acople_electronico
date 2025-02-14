@@ -9,7 +9,6 @@ Sensor::Sensor(int pin, int pulsesPerRevolution, float sampleTime)
 void Sensor::begin() {
     pinMode(pin, INPUT_PULLUP);
     // Use InterruptManager's ISR instead of Sensor's own.
-    attachInterruptArg(digitalPinToInterrupt(pin), InterruptManager::handleInterrupt, this, RISING);
 }
 
 void Sensor::countPulse() {
