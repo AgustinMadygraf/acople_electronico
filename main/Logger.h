@@ -9,7 +9,8 @@
  * @brief Implements logging functionality using Serial.
  *
  * Provides methods to initialize the logger, log messages at various levels,
- * and set the active logging level.
+ * and set the active logging level. The logging level is configurable through
+ * the begin() method.
  */
 class Logger : public ILogger {
 public:
@@ -19,27 +20,27 @@ public:
     Logger();
     
     /**
-     * @brief Initializes the logger and Serial communication.
+     * @brief Initializes Serial communication and sets the logging level.
      *
-     * Configures Serial output and sets the logging level.
-     * The logging level can be adjusted at runtime via setLevel().
+     * Configures Serial output and sets the logging level. The level can be adjusted
+     * at startup by passing the desired LogLevel.
      *
      * @param level The logging level to be set (default: LOG_DEBUG).
      */
     void begin(LogLevel level = LOG_DEBUG) override;
     
     /**
-     * @brief Logs a message if the log level is at or above the current threshold.
+     * @brief Logs a message with corresponding log level prefix.
      *
-     * The log output includes a prefix indicating the log level.
+     * Ignores messages with a lower level than currentLevel.
      *
-     * @param level The logging level of the message.
+     * @param level Log level of the message.
      * @param message The message to log.
      */
     void log(LogLevel level, const char* message) override;
     
     /**
-     * @brief Sets the logger's logging level.
+     * @brief Updates the logger's current logging level.
      *
      * Allows runtime adjustment of the verbosity of log output.
      *

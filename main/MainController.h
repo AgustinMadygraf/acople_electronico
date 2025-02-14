@@ -8,29 +8,38 @@
 
 /**
  * @class MainController
- * @brief Manages sensor readings, PID computation, and actuator output.
+ * @brief Coordina la lectura de sensores, cálculo PID y salida a actuadores.
  *
- * Uses dependency injection to receive Sensor, PIDController, and ILogger instances.
+ * La clase MainController utiliza:
+ * - Inyección de dependencias para los sensores, controlador PID y logger.
+ * - Métodos para inicializar y actualizar el sistema de control.
  */
 class MainController {
 public:
     /**
-     * @brief Constructs MainController with injected dependencies.
+     * @brief Constructor que inyecta las dependencias necesarias.
      *
-     * @param sensorMaestro Pointer to the master sensor.
-     * @param sensorEsclavo Pointer to the slave sensor.
-     * @param pid Pointer to the PID controller.
-     * @param logger Pointer to the logger instance.
+     * @param sensorMaestro Puntero al sensor maestro.
+     * @param sensorEsclavo Puntero al sensor esclavo.
+     * @param pid Puntero al controlador PID.
+     * @param logger Puntero al logger para el registro de eventos.
+     *
+     * Se guardan las referencias para uso en la inicialización y actualización.
      */
     MainController(Sensor* sensorMaestro, Sensor* sensorEsclavo, PIDController* pid, ILogger* logger);
     
     /**
-     * @brief Initializes all subsystems.
+     * @brief Inicializa todos los subsistemas.
+     *
+     * Configura el logger, inicializa ambos sensores y ajusta la salida PWM.
      */
     void begin();
     
     /**
-     * @brief Performs a periodic update: reads sensors, computes PID, and updates PWM output.
+     * @brief Actualiza de forma periódica:
+     * - Lee las RPM de los sensores.
+     * - Calcula la salida PID.
+     * - Aplica la señal a través del PWM.
      */
     void update();
     
@@ -40,7 +49,7 @@ private:
     PIDController* pid;
     ILogger* logger;
     unsigned long previousTime;
-    static const int PWM_ESCLAVO_PIN = 25;
+    static const int PWM_ESCLAVO_PIN = 25; // Pin dedicado a la salida PWM del sensor esclavo.
     // Constants used for PWM setup and other hardware parameters.
 };
 

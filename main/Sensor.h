@@ -5,48 +5,58 @@
 
 /**
  * @class Sensor
- * @brief Reads sensor pulses and calculates RPM.
+ * @brief Encapsula la lectura de pulsos y el cálculo de RPM de un sensor.
  *
- * The Sensor class encapsulates the functionality needed to count pulses,
- * attach interrupts, and compute revolutions per minute (RPM) based on the pulses.
+ * Esta clase se encarga de:
+ * - Configurar el pin del sensor.
+ * - Gestionar las interrupciones para contar pulsos.
+ * - Calcular las RPM en base a un tiempo de muestreo.
  */
 class Sensor {
 public:
     /**
-     * @brief Constructs a sensor with the specified settings.
+     * @brief Constructor que inicializa la configuración del sensor.
+     * @param pin Pin digital al que se conecta el sensor.
+     * @param pulsesPerRevolution Número de pulsos generados por revolución.
+     * @param sampleTime Tiempo de muestreo en milisegundos.
      *
-     * @param pin Digital pin connected to the sensor.
-     * @param pulsesPerRevolution Number of pulses per one revolution.
-     * @param sampleTime Sampling time in milliseconds.
+     * Se almacenan los parámetros iniciales para configurar el sensor.
      */
     Sensor(int pin, int pulsesPerRevolution, float sampleTime);
     
     /**
-     * @brief Initializes the sensor pin and attaches interrupt.
+     * @brief Inicializa el sensor configurando el pin y asociando la interrupción.
+     *
+     * Se configura el pin en modo INPUT_PULLUP y se asocia el manejador de interrupciones.
      */
     void begin();
     
     /**
-     * @brief Increments the pulse count.
+     * @brief Incrementa el contador interno de pulsos.
+     *
+     * Este método es llamado por la rutina de interrupción para contar cada pulso.
      */
     void countPulse();
     
     /**
-     * @brief Calculates and returns the RPM.
+     * @brief Calcula y retorna las RPM actuales.
      *
-     * Resets the internal pulse count.
+     * El método:
+     * - Desactiva interrupciones para leer y resetear el contador.
+     * - Calcula las RPM basado en el número de pulsos y el tiempo de muestreo.
      *
-     * @return float The computed RPM.
+     * @return float RPM calculadas.
      */
     float getRPM();
 
     /**
-     * @brief Static ISR handler for interrupt processing.
+     * @brief Manejador de interrupciones estático.
      *
-     * Attaches to the sensor pin interrupt and casts the argument to a Sensor instance.
-     * Calls countPulse() to update the internal pulse count.
+     * Este método se pasa como parámetro a attachInterruptArg y:
+     * - Recibe un puntero al objeto Sensor.
+     * - Llama a countPulse() para actualizar el contador de pulsos.
      *
-     * @param arg Pointer to the Sensor instance.
+     * @param arg Puntero a la instancia Sensor.
      */
     static void IRAM_ATTR isrHandler(void *arg);
 
