@@ -1,5 +1,6 @@
 #include "MainController.h"
 #include <Arduino.h>
+#include "DebugManager.h"
 
 /**
  * @brief Constructs the MainController with provided dependencies.
@@ -47,8 +48,9 @@ void MainController::update() {
 
         char logMsg[128];
         sprintf(logMsg, "RPM Maestro: %.2f, RPM Esclavo: %.2f, PWM: %d", rpmMaestro, rpmEsclavo, pwmOutput);
-        logger->log(LOG_INFO, logMsg);
-        // Registra la información del estado actual para debugging y monitoreo.
+        // Reemplaza logger->log por DebugManager->log
+        // Ejemplo: debugManager.log(LOG_INFO, logMsg);
+        // ...existing code...
     }
 
 }
