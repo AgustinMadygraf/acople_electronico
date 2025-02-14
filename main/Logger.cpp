@@ -19,7 +19,7 @@ static const char* getLogLevelName(LogLevel level) {
 /**
  * @brief Logger constructor initializing the default log level.
  */
-Logger::Logger() : currentLevel(LOG_DEBUG) {
+Logger::Logger() : currentLevel(LOG_DEBUG), logBuffer("") {
 }
 
 /**
@@ -48,10 +48,15 @@ void Logger::begin(LogLevel level) {
 void Logger::log(LogLevel level, const char* message) {
     if (level < currentLevel) return;
     const char* levelStr = getLogLevelName(level);
-    Serial.print("[");
-    Serial.print(levelStr);
-    Serial.print("] ");
-    Serial.println(message);
+    unsigned long ts = millis();
+    // Build the log message with timestamp and append to buffer.
+    logBuffer += "[";
+    logBuffer += String(ts);
+    logBuffer += "] [";
+    logBuffer += levelStr;
+    logBuffer += "] ";
+    logBuffer += message;
+    logBuffer += "\n";
 }
 
 /**
@@ -63,4 +68,12 @@ void Logger::setLevel(LogLevel level) {
     currentLevel = level;
     Serial.print("[Logger] Log level updated to: ");
     Serial.println(getLogLevelName(currentLevel));
+}
+
+/**
+ * @brief Flushes buffered log messages via Serial.
+ */
+void Logger::flushBuffer() {
+    Serial.print(logBuffer);
+    logBuffer = "";
 }

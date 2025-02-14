@@ -48,8 +48,17 @@ public:
      */
     void setLevel(LogLevel level) override;
     
+    /**
+     * @brief Flushes the buffered log messages.
+     *
+     * Prints and clears the accumulated log messages.
+     */
+    void flushBuffer();
+    
 private:
     LogLevel currentLevel;
+    // Buffer to accumulate log messages with timestamps.
+    String logBuffer;
 };
 
 #endif // LOGGER_H
