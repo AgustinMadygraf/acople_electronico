@@ -33,12 +33,19 @@ public:
 };
 
 /**
+ * @enum PlatformType
+ * @brief Enum to specify the platform type.
+ */
+enum PlatformType { PLATFORM_ARDUINO, PLATFORM_ESP32 };
+
+/**
  * @brief Factory function to create a HAL instance.
  *
- * The implementation selected can be based on compile-time macros.
+ * The implementation selected can be based on the platform parameter.
  *
+ * @param platform The platform type.
  * @return HAL* Pointer to the HAL instance.
  */
-HAL* createHAL();
+HAL* createHAL(PlatformType platform);
 
 #endif // HAL_H

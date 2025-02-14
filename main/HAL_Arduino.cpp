@@ -18,10 +18,3 @@ public:
         analogWrite(pin, value);
     }
 };
-
-#ifndef ESP32_PLATFORM
-HAL* createHAL() {
-    static HAL_Arduino instance;
-    return &instance;
-}
-#endif // !ESP32_PLATFORM

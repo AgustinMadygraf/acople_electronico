@@ -20,10 +20,3 @@ public:
         ledcWrite(channel, value);
     }
 };
-
-#ifdef ESP32_PLATFORM
-HAL* createHAL() {
-    static HAL_ESP32 instance;
-    return &instance;
-}
-#endif // ESP32_PLATFORM
