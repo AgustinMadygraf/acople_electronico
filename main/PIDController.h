@@ -1,13 +1,15 @@
 #ifndef PIDCONTROLLER_H
 #define PIDCONTROLLER_H
 
+#include "IPIDStrategy.h"
+
 /**
  * @class PIDController
  * @brief Implements a PID (Proportional-Integral-Derivative) controller.
  *
  * This class computes a control signal based on the error between a setpoint and measurement.
  */
-class PIDController {
+class PIDController : public IPIDStrategy {
 public:
     /**
      * @brief Constructs a PID controller with given gains and sample time.
@@ -31,7 +33,7 @@ public:
      * @param measurement The current measured value.
      * @return int The computed control output, clamped between 0 and 255.
      */
-    int compute(float setpoint, float measurement);
+    int compute(float setpoint, float measurement) override;
     
 private:
     float kp;

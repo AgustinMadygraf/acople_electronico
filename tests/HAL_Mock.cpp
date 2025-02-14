@@ -1,0 +1,21 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#endif // UNIT_TEST}    return &mockInstance;    static HAL_Mock mockInstance;HAL* createHAL() {};    }        // Simulate PWM write    void writePWM(int pin, int value) override {    }        // Simulate PWM setup    void setupPWM(int pin, int frequency, int resolution) override {public:class HAL_Mock : public HAL {#include "../main/HAL.h"#ifdef UNIT_TEST
