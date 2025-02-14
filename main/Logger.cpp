@@ -13,7 +13,8 @@ Logger::Logger() : currentLevel(LOG_DEBUG) {
  */
 void Logger::begin(LogLevel level) {
     currentLevel = level;
-    Serial.begin(115200);
+    Serial.begin(115200); // Initialize Serial communication
+    // The logger's level is configurable at runtime using setLevel().
 }
 
 /**

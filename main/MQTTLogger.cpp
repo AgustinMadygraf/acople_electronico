@@ -12,6 +12,7 @@ void MQTTLogger::begin(LogLevel level) {
     Serial.print(broker);
     Serial.print(":");
     Serial.println(port);
+    // The logging level can be adjusted at runtime via setLevel().
     // ...actual MQTT connection logic...
 }
 

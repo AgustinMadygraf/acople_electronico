@@ -43,6 +43,9 @@ public:
     /**
      * @brief Static ISR handler for interrupt processing.
      *
+     * Attaches to the sensor pin interrupt and casts the argument to a Sensor instance.
+     * Calls countPulse() to update the internal pulse count.
+     *
      * @param arg Pointer to the Sensor instance.
      */
     static void IRAM_ATTR isrHandler(void *arg);
