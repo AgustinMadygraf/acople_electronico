@@ -2,26 +2,44 @@
 #define LOGGER_H
 
 #include <Arduino.h>
-
-/**
- * @enum LogLevel
- * @brief Representa los niveles de logging.
- */
-enum LogLevel {
-    LOG_DEBUG,
-    LOG_INFO,
-    LOG_WARN,
-    LOG_ERROR
-};
-
 #include "ILogger.h"
 
+/**
+ * @class Logger
+ * @brief Implements logging functionality using Serial.
+ *
+ * Provides methods to initialize the logger, log messages at various levels,
+ * and set the active logging level.
+ */
 class Logger : public ILogger {
 public:
+    /**
+     * @brief Constructs a Logger instance with default logging level.
+     */
     Logger();
+    
+    /**
+     * @brief Initializes the logger and Serial communication.
+     * 
+     * @param level The logging level to be set (default: LOG_DEBUG).
+     */
     void begin(LogLevel level = LOG_DEBUG) override;
+    
+    /**
+     * @brief Logs a message if the level is at or above the current level.
+     * 
+     * @param level The log level of the message.
+     * @param message The message to log.
+     */
     void log(LogLevel level, const char* message) override;
+    
+    /**
+     * @brief Sets the logger's level.
+     * 
+     * @param level The new logging level.
+     */
     void setLevel(LogLevel level) override;
+    
 private:
     LogLevel currentLevel;
 };

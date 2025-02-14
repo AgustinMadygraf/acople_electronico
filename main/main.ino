@@ -5,8 +5,17 @@
 
 #include <Arduino.h>
 #include "MainController.h"
+#include "Sensor.h"
+#include "PIDController.h"
+#include "Logger.h"
 
-MainController mainController;
+Sensor sensorMaestro(34, 10, 100.0);
+Sensor sensorEsclavo(35, 10, 100.0);
+PIDController pid(2.0, 0.5, 0.1, 100.0);
+Logger logger;
+
+// Instantiate MainController with dependency injection.
+MainController mainController(&sensorMaestro, &sensorEsclavo, &pid, &logger);
 
 void setup() {
     mainController.begin();

@@ -1,8 +1,12 @@
 #ifndef ILOGGER_H
 #define ILOGGER_H
 
-#include "Logger.h" // Requiere LogLevel
+#include "LogLevel.h"
 
+/**
+ * @interface ILogger
+ * @brief Interface for logging implementations.
+ */
 class ILogger {
 public:
     virtual void begin(LogLevel level = LOG_DEBUG) = 0;
